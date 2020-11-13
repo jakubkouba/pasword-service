@@ -1,7 +1,7 @@
 class PasswordService < Sinatra::Base
 
-  get '/' do
-    'Hello world'
+  post '/strength' do
+    params['password']
   end
 
 end
