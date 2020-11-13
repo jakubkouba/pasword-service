@@ -1,7 +1,8 @@
 class PasswordService < Sinatra::Base
 
   post '/strength' do
-    params['password']
+    password_strength = PasswordStrength.new(params['password'])
+    password_strength.state
   end
 
 end
