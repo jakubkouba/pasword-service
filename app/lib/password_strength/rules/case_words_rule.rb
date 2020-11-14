@@ -5,15 +5,15 @@ require 'password_strength/rules/base'
 module PasswordStrength
   module Rules
     class CaseWordsRule < Base
-      def initialize(password:, option: nil, score: 15)
+      def initialize(password:, option: 1, score: 15)
         super
       end
 
       def passed?
         raise InvalidOptionError, "Option has to be positive integer, but #{option.inspect} given" unless valid_option?
 
-        regex = /([A-Z]){#{option}}/
-        !!password.match(regex)
+        regex = /([A-Z])/
+        password.scan(regex).count == option
       end
 
       private

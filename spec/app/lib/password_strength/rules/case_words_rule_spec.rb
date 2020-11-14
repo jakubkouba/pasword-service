@@ -17,14 +17,14 @@ RSpec.describe PasswordStrength::Rules::CaseWordsRule do
     describe 'when option is 2' do
       let(:option) { 2 }
 
-      describe 'when password does not contain 2 upper case characters' do
+      describe 'and password does not contain 2 uppercase characters' do
         let(:password) { 'no_uppercase_letters' }
 
         it { is_expected.to be false }
       end
 
-      describe 'when password contains at least 2 upper case characters' do
-        let(:password) { 'TWo_uppercase_letters' }
+      describe 'and password contains at least 2 uppercase characters' do
+        let(:password) { 'TwO_uppercase_letters' }
 
         it { is_expected.to be true }
       end
