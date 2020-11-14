@@ -15,8 +15,8 @@ module PasswordStrength
       def passed?
         raise InvalidOptionError, "Option has to be positive integer, but #{option.inspect} given" unless valid_option?
 
-        regex = /([#{SYMBOLS}]){#{option}}/
-        !!password.match(regex)
+        regex = /([#{SYMBOLS}])/
+        password.scan(regex).count == option
       end
 
       def valid_option?

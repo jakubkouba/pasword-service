@@ -24,7 +24,7 @@ RSpec.describe PasswordStrength::Rules::SymbolRule do
       end
 
       describe 'when password contains at least 2 symbols' do
-        let(:password) { 'password@#_with_symbols' }
+        let(:password) { 'password@_with#_symbols' }
 
         it { is_expected.to eq true }
       end
