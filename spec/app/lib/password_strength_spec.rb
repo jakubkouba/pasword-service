@@ -30,4 +30,17 @@ RSpec.describe PasswordStrength do
       it { is_expected.to eq :strong }
     end
   end
+
+  describe '#score' do
+    subject(:score) { password_strength.score }
+
+    describe 'with length rule of score 10' do
+      let(:length_rule) { double('LengthRule', score: 10, passed?: true) }
+      before { allow(password_strength).to receive(:rules).and_return(length_rule) }
+
+      context 'when passed' do
+        it { is_expected.to eq 10 }
+      end
+    end
+  end
 end

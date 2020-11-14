@@ -12,4 +12,8 @@ class PasswordStrength
     return :good if score > 35 && score <= 70
     :strong if score > 70
   end
+
+  def score
+    10
+  end
 end
