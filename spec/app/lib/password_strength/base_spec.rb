@@ -74,7 +74,18 @@ RSpec.describe PasswordStrength::Base do
         apply_rule
 
         expect(password_strength.rules.count).to eq 1
-        expect(password_strength.rules.first).to be_an_instance_of SomeRule
+        expect(password_strength.rules.values.first).to be_an_instance_of SomeRule
+      end
+
+      context 'when applying the same rule twice' do
+
+        before { password_strength.apply_rule(rule) }
+
+        it 'does not add the the rule' do
+          password_strength.apply_rule(rule)
+
+          expect(password_strength.rules.count).to eq 1
+        end
       end
     end
   end
