@@ -20,6 +20,12 @@ RSpec.describe PasswordStrength::Rules::CaseWordsRule do
 
         it { is_expected.to be false }
       end
+
+      describe 'when password contains at least 2 upper case characters' do
+        let(:password) { 'TWo_uppercase_letters' }
+
+        it { is_expected.to be true }
+      end
     end
   end
 end

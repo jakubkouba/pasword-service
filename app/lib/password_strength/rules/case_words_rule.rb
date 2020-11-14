@@ -9,7 +9,9 @@ module PasswordStrength
       end
 
       def passed?
-        false
+        regex = /([A-Z]){#{option}}/
+        !!password.match(regex)
+      end
       end
 
     end
