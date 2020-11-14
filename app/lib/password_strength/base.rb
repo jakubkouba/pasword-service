@@ -2,10 +2,11 @@
 
 module PasswordStrength
   class Base
-    attr_reader :password
+    attr_reader :password, :rules
 
-    def initialize(password)
+    def initialize(password:, rules: [])
       @password = password
+      @rules = rules
     end
 
     def status
@@ -20,6 +21,16 @@ module PasswordStrength
         total_score += rule.score if rule.passed?
         total_score
       end
+    end
+
+    def apply_rule(rule)
+      @rules << rule_class(rule).new(password)
+    end
+
+    private
+
+    def rule_class(rule)
+      Kernel.const_get"#{rule.to_s.split('_').map(&:capitalize).join}Rule"
     end
   end
 end

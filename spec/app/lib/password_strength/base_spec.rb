@@ -3,7 +3,7 @@
 require 'password_strength/base'
 
 RSpec.describe PasswordStrength::Base do
-  let(:password_strength) { described_class.new(password) }
+  let(:password_strength) { described_class.new(password: password) }
   let(:password) { '' }
 
   describe '#status' do
@@ -56,6 +56,25 @@ RSpec.describe PasswordStrength::Base do
 
       context 'when both passed' do
         it { is_expected.to eq 30 }
+      end
+    end
+  end
+
+  describe '#apply_rule' do
+    subject(:apply_rule) { password_strength.apply_rule(rule) }
+    let(:rule) { :some }
+    let(:password) { 'password' }
+
+    context 'when length rule class exists' do
+      class SomeRule
+        def initialize(password); end
+      end
+
+      it 'adds instance of rule class to the list of rules' do
+        apply_rule
+
+        expect(password_strength.rules.count).to eq 1
+        expect(password_strength.rules.first).to be_an_instance_of SomeRule
       end
     end
   end
