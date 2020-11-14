@@ -4,9 +4,10 @@ module PasswordStrength
   class Base
     attr_reader :password
 
-    def initialize(password:, rules: {})
+    def initialize(password:, rules: [])
       @password = password
-      @rules = rules
+      @rules = {}
+      load_rules(rules)
     end
 
     def status
@@ -35,6 +36,10 @@ module PasswordStrength
 
     def rule_class(rule)
       Kernel.const_get"#{rule.to_s.split('_').map(&:capitalize).join}Rule"
+    end
+
+    def load_rules(rules)
+      rules.each { |rule| @rules[rule] = rule_class(rule).new(password) }
     end
   end
 end

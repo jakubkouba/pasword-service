@@ -65,6 +65,20 @@ RSpec.describe PasswordStrength::Base do
 
     it { is_expected.to be_an Array }
 
+    context "when #{described_class} is initialize with a particular rule" do
+      let(:password_strength) { described_class.new(password: password, rules: [rule]) }
+      let(:rule) { :some }
+
+      context 'and the rule exists' do
+        class SomeRule
+          def initialize(password); end
+        end
+
+        it 'contains that rule' do
+          expect(rules.first).to be_an_instance_of SomeRule
+        end
+      end
+    end
   end
 
   describe '#apply_rule' do
