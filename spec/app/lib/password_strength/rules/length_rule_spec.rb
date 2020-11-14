@@ -20,6 +20,12 @@ RSpec.describe PasswordStrength::Rules::LengthRule do
 
         it { is_expected.to be false }
       end
+
+      describe 'when password is "aaaaaa"' do
+        let(:password) { 'a' * 6 }
+
+        it { is_expected.to be true }
+      end
     end
   end
 end

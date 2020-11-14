@@ -4,12 +4,12 @@ module PasswordStrength
   module Rules
     class LengthRule < Base
 
-      def initialize(password:, option: nil, score: nil)
+      def initialize(password:, option: 6, score: 10)
         super
       end
 
       def passed?
-        false
+        password.length >= option
       end
 
     end
