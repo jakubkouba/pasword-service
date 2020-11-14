@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require 'password_strength/rules/length_rule'
+require 'password_strength/rules/number_rule'
+require 'password_strength/rules/sequence_rule'
+require 'password_strength/rules/symbol_rule'
+
 module PasswordStrength
   class Base
     attr_reader :password
@@ -25,7 +30,7 @@ module PasswordStrength
     end
 
     def apply_rule(rule)
-      @rules[rule] = rule_class(rule).new(password)
+      @rules[rule] = load_rule(rule)
     end
 
     def rules
@@ -35,11 +40,15 @@ module PasswordStrength
     private
 
     def rule_class(rule)
-      Kernel.const_get"#{rule.to_s.split('_').map(&:capitalize).join}Rule"
+      Kernel.const_get "PasswordStrength::Rules::#{rule.to_s.split('_').map(&:capitalize).join}Rule"
     end
 
     def load_rules(rules)
-      rules.each { |rule| @rules[rule] = rule_class(rule).new(password) }
+      rules.each { |rule| @rules[rule] = load_rule(rule) }
+    end
+
+    def load_rule(rule)
+      rule_class(rule).new(password: password)
     end
   end
 end
