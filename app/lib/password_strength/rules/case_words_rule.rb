@@ -1,15 +1,16 @@
+# frozen_string_literal: true
+
 require 'password_strength/rules/base'
 
 module PasswordStrength
   module Rules
     class CaseWordsRule < Base
-
       def initialize(password:, option: nil, score: 15)
         super
       end
 
       def passed?
-        raise InvalidOptionError.new "Option has to be positive integer, but #{option.inspect} given"  unless valid_option?
+        raise InvalidOptionError, "Option has to be positive integer, but #{option.inspect} given" unless valid_option?
 
         regex = /([A-Z]){#{option}}/
         !!password.match(regex)
@@ -23,8 +24,6 @@ module PasswordStrength
 
         true
       end
-
     end
   end
 end
-

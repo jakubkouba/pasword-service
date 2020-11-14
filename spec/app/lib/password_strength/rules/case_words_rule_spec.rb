@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'password_strength/rules/case_words_rule'
 
 RSpec.describe PasswordStrength::Rules::CaseWordsRule do
@@ -5,7 +7,7 @@ RSpec.describe PasswordStrength::Rules::CaseWordsRule do
 
   let(:length_rule) { described_class.new(password: password, option: option) }
   let(:password) { '' }
-  let(:option) { }
+  let(:option) {}
 
   it { is_expected.to be < PasswordStrength::Rules::Base }
 
