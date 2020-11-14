@@ -36,7 +36,7 @@ RSpec.describe PasswordStrength do
 
     describe 'with length rule of score 10' do
       let(:length_rule) { double('LengthRule', score: 10, passed?: true) }
-      before { allow(password_strength).to receive(:rules).and_return(length_rule) }
+      before { allow(password_strength).to receive(:rules).and_return([length_rule]) }
 
       context 'when passed' do
         it { is_expected.to eq 10 }
@@ -45,6 +45,17 @@ RSpec.describe PasswordStrength do
       context 'when failed' do
         let(:length_rule) { double('LengthRule', score: 10, passed?: false) }
         it { is_expected.to eq 0 }
+      end
+    end
+
+    describe 'with length rule of score 10 and symbol rule of score 20' do
+      let(:length_rule) { double('LengthRule', score: 10, passed?: true) }
+      let(:symbol_rule) { double('SymbolRule', score: 20, passed?: true) }
+
+      before { allow(password_strength).to receive(:rules).and_return([length_rule, symbol_rule]) }
+
+      context 'when both passed' do
+        it { is_expected.to eq 30 }
       end
     end
   end

@@ -14,6 +14,9 @@ class PasswordStrength
   end
 
   def score
-    rules.passed? ? rules.score : 0
+    rules.reduce(0) do |total_score, rule|
+      total_score += rule.score if rule.passed?
+      total_score
+    end
   end
 end
