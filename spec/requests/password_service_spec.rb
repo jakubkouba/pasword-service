@@ -8,7 +8,7 @@ RSpec.describe 'Password Service' do
       post '/strength', { password: 'abc'}
 
       expect(last_response).to be_ok
-      expect(last_response.body).to eq 'abc'
+      expect(last_response.body).to eq 'weak'
     end
   end
 end
