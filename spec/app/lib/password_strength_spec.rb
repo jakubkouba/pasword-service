@@ -41,6 +41,11 @@ RSpec.describe PasswordStrength do
       context 'when passed' do
         it { is_expected.to eq 10 }
       end
+
+      context 'when failed' do
+        let(:length_rule) { double('LengthRule', score: 10, passed?: false) }
+        it { is_expected.to eq 0 }
+      end
     end
   end
 end

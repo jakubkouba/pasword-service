@@ -14,6 +14,6 @@ class PasswordStrength
   end
 
   def score
-    10
+    rules.passed? ? rules.score : 0
   end
 end
