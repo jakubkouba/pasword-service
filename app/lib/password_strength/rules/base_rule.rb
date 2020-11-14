@@ -1,3 +1,0 @@
-
-class BaseRule
-end
