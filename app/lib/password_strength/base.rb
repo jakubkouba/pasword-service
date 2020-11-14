@@ -2,9 +2,9 @@
 
 module PasswordStrength
   class Base
-    attr_reader :password, :rules
+    attr_reader :password
 
-    def initialize(password:, rules: [])
+    def initialize(password:, rules: {})
       @password = password
       @rules = rules
     end
@@ -24,7 +24,11 @@ module PasswordStrength
     end
 
     def apply_rule(rule)
-      @rules << rule_class(rule).new(password)
+      @rules[rule] = rule_class(rule).new(password)
+    end
+
+    def rules
+      @rules.values
     end
 
     private

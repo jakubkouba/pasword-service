@@ -60,6 +60,13 @@ RSpec.describe PasswordStrength::Base do
     end
   end
 
+  describe '#rules' do
+    subject(:rules) { password_strength.rules }
+
+    it { is_expected.to be_an Array }
+
+  end
+
   describe '#apply_rule' do
     subject(:apply_rule) { password_strength.apply_rule(rule) }
     let(:rule) { :some }
@@ -74,7 +81,7 @@ RSpec.describe PasswordStrength::Base do
         apply_rule
 
         expect(password_strength.rules.count).to eq 1
-        expect(password_strength.rules.values.first).to be_an_instance_of SomeRule
+        expect(password_strength.rules.first).to be_an_instance_of SomeRule
       end
 
       context 'when applying the same rule twice' do
