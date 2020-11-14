@@ -9,6 +9,7 @@ class PasswordStrength
 
   def status
     return :weak if score <= 35
-    return :good if score > 35 || score <= 70
+    return :good if score > 35 && score <= 70
+    :strong if score > 70
   end
 end

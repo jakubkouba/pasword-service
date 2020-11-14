@@ -23,5 +23,11 @@ RSpec.describe PasswordStrength do
 
       it { is_expected.to eq :good }
     end
+
+    describe 'when score is more than 70' do
+      let(:score) { 85 }
+
+      it { is_expected.to eq :strong }
+    end
   end
 end
