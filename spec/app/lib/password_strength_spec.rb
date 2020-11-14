@@ -8,9 +8,12 @@ RSpec.describe PasswordStrength do
 
   describe '#status' do
     subject(:status) { password_strength.status }
+    let(:score) { 0 }
 
-    describe 'for "abc"' do
-      let(:password) { 'abc' }
+    before { allow(password_strength).to receive(:score).and_return(score)}
+
+    describe 'when score is less than 35' do
+      let(:score) { 35 }
 
       it { is_expected.to eq :weak }
     end

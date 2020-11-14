@@ -1,0 +1,3 @@
+
+class BaseRule
+end
