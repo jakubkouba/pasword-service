@@ -9,9 +9,19 @@ module PasswordStrength
       end
 
       def passed?
+        raise InvalidOptionError.new "Option has to be positive integer, but #{option.inspect} given"  unless valid_option?
+
         regex = /([A-Z]){#{option}}/
         !!password.match(regex)
       end
+
+      private
+
+      def valid_option?
+        return false unless option.class == Integer
+        return false if option < 1
+
+        true
       end
 
     end

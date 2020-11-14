@@ -16,5 +16,7 @@ module PasswordStrength
       end
 
     end
+
+    class InvalidOptionError < StandardError; end
   end
 end

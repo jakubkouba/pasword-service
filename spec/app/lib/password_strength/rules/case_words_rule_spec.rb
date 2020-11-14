@@ -27,5 +27,13 @@ RSpec.describe PasswordStrength::Rules::CaseWordsRule do
         it { is_expected.to be true }
       end
     end
+
+    describe 'when option is negative' do
+      let(:option) { -1 }
+
+      it 'raise error' do
+        expect { passed? }.to raise_error PasswordStrength::Rules::InvalidOptionError
+      end
+    end
   end
 end
