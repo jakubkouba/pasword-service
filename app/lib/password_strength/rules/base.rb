@@ -15,9 +15,6 @@ module PasswordStrength
         raise NotImplementedError
       end
 
-      def score
-        raise NotImplementedError
-      end
     end
   end
 end
