@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../../app/lib/password_strength/base'
+require 'password_strength/base'
 
 RSpec.describe PasswordStrength::Base do
   let(:password_strength) { described_class.new(password) }

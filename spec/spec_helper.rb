@@ -4,6 +4,7 @@ require 'sinatra'
 require 'byebug'
 
 set :environment, :test
+$LOAD_PATH.push(File.expand_path('../app/lib', File.dirname(__FILE__ )))
 
 def app
   PasswordService
