@@ -8,7 +8,7 @@ module PasswordStrength
 
       SYMBOLS = '!@#$%&'
 
-      def initialize(password:, option: 1, score: 15)
+      def initialize(password:, option: 1, score: 25)
         super
       end
 
@@ -16,7 +16,7 @@ module PasswordStrength
         raise InvalidOptionError, "Option has to be positive integer, but #{option.inspect} given" unless valid_option?
 
         regex = /([#{SYMBOLS}])/
-        password.scan(regex).count == option
+        password.scan(regex).count >= option
       end
 
       def valid_option?
