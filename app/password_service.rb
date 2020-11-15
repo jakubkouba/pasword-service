@@ -1,13 +1,16 @@
+# frozen_string_literal: true
+
 require 'password_strength'
+require 'serializers/password_strength_serializer'
 
 class PasswordService < Sinatra::Base
-
   post '/strength' do
-    PasswordStrength.strength_for(params['password']) do |password_strength|
-      password_strength.apply_rule :sequence
-      password_strength.apply_rule :case_words
-      password_strength.apply_rule :black_list
+    password_strength = PasswordStrength.for(params['password']) do |ps|
+      ps.apply_rule :sequence
+      ps.apply_rule :case_words
+      ps.apply_rule :black_list
     end
-  end
 
+    PasswordStrengthSerializer.new(password_strength).to_json
+  end
 end

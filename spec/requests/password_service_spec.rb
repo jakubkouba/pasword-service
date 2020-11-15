@@ -1,9 +1,11 @@
-require_relative  '../../app/password_service'
+# frozen_string_literal: true
+
+require 'json'
+require 'password_service'
 
 RSpec.describe 'Password Service' do
-
   describe 'POST /strength' do
-    subject(:strength) { last_response.body }
+    subject(:strength) { JSON.parse(last_response.body)['status'] }
     let(:password) { '' }
 
     before { post '/strength', { password: password } }
