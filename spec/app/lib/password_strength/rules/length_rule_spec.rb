@@ -15,14 +15,20 @@ RSpec.describe PasswordStrength::Rules::LengthRule do
     context "with option is 6" do
       let(:option) { 6 }
 
-      describe 'when password is "aaa"' do
+      describe 'when password has 3 letters' do
         let(:password) { 'a' * 3 }
 
         it { is_expected.to be false }
       end
 
-      describe 'when password is "aaaaaa"' do
+      describe 'when password has 6 letters' do
         let(:password) { 'a' * 6 }
+
+        it { is_expected.to be true }
+      end
+
+      describe 'when password has 7 letters' do
+        let(:password) { 'a' * 7 }
 
         it { is_expected.to be true }
       end
