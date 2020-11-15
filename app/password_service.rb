@@ -4,7 +4,7 @@ require 'password_strength'
 require 'serializers/password_strength_serializer'
 
 class PasswordService < Sinatra::Base
-  post '/strength' do
+  post '/api/v1/password_strength' do
     password_strength = PasswordStrength.for(params['password']) do |ps|
       ps.apply_rule :sequence
       ps.apply_rule :case_words
