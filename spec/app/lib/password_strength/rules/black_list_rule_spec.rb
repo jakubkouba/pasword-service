@@ -22,5 +22,11 @@ RSpec.describe PasswordStrength::Rules::BlackListRule do
 
       it { is_expected.to be true }
     end
+
+    describe 'when password is in the list of blacklisted passwords' do
+      let(:password) { 'player'}
+
+      it { is_expected.to be false }
+    end
   end
 end

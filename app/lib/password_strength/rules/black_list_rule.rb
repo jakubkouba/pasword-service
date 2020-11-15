@@ -16,7 +16,19 @@ module PasswordStrength
       end
 
       def passed?
+        return false if password_is_blacklisted?
+
         true
+      end
+
+      private
+
+      def password_is_blacklisted?
+        File.foreach(black_list_file) do |word|
+          return true if word.strip == password
+        end
+
+        false
       end
     end
   end
