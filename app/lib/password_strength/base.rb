@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require 'password_strength/rules/black_list_rule'
+require 'password_strength/rules/case_words_rule'
 require 'password_strength/rules/length_rule'
 require 'password_strength/rules/number_rule'
-require 'password_strength/rules/sequence_rule'
 require 'password_strength/rules/symbol_rule'
+require 'password_strength/rules/sequence_rule'
 
 module PasswordStrength
   class Base
@@ -16,10 +18,10 @@ module PasswordStrength
     end
 
     def status
-      return :weak if score <= 35
-      return :good if score > 35 && score <= 70
+      return :weak if score < 35
+      return :good if score >= 35 && score < 70
 
-      :strong if score > 70
+      :strong if score >= 70
     end
 
     def score

@@ -12,20 +12,26 @@ RSpec.describe PasswordStrength::Base do
 
     before { allow(password_strength).to receive(:score).and_return(score) }
 
-    describe 'when score is less or equal than 35' do
-      let(:score) { 35 }
+    describe 'when score is less than 35' do
+      let(:score) { 30 }
 
       it { is_expected.to eq :weak }
     end
 
-    describe 'when score is more than 35 and less or equal than 70' do
-      let(:score) { 50 }
+    describe 'when score is more or equal than 35' do
+      let(:score) { 35 }
 
       it { is_expected.to eq :good }
     end
 
-    describe 'when score is more than 70' do
-      let(:score) { 85 }
+    describe 'when score is less than 70' do
+      let(:score) { 65 }
+
+      it { is_expected.to eq :good }
+    end
+
+    describe 'when score is more or equal than 70' do
+      let(:score) { 70 }
 
       it { is_expected.to eq :strong }
     end

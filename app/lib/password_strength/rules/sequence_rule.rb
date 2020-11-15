@@ -6,7 +6,7 @@ module PasswordStrength
   module Rules
     class SequenceRule < Base
 
-      def initialize(password:, option: 3, score: 30)
+      def initialize(password:, option: 3, score: 10)
         super
       end
 

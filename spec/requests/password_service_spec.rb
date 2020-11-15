@@ -3,12 +3,37 @@ require_relative  '../../app/password_service'
 RSpec.describe 'Password Service' do
 
   describe 'POST /strength' do
+    subject(:strength) { last_response.body }
+    let(:password) { '' }
+
+    before { post '/strength', { password: password } }
 
     it 'responds with 200' do
-      post '/strength', { password: 'abc'}
-
       expect(last_response).to be_ok
-      expect(last_response.body).to eq 'weak'
+    end
+
+    describe 'when password is abc' do
+      let(:password) { 'abc' }
+
+      it { is_expected.to eq 'weak' }
+    end
+
+    describe 'when password contains capital letter, number and is long enough but contains sequence' do
+      let(:password) { 'Abccc1def' }
+
+      it { is_expected.to eq 'good' }
+    end
+
+    describe 'when password contains capital letter, number, is long enough contains special character but in sequence' do
+      let(:password) { 'Ab@@@1def' }
+
+      it { is_expected.to eq 'good' }
+    end
+
+    describe 'when password contains capital letters, symbol, number, without sequence and is long enough' do
+      let(:password) { 'H@2blac' }
+
+      it { is_expected.to eq 'strong' }
     end
   end
 end
