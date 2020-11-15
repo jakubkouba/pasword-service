@@ -11,6 +11,10 @@ class PasswordService < Sinatra::Base
       ps.apply_rule :black_list
     end
 
-    PasswordStrengthSerializer.new(password_strength).to_json
+    [
+      200,
+      { 'Content-Type' => 'Application/json' },
+      PasswordStrengthSerializer.new(password_strength).to_json
+    ]
   end
 end
