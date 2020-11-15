@@ -5,14 +5,14 @@ require 'password_strength/rules/case_words_rule'
 RSpec.describe PasswordStrength::Rules::CaseWordsRule do
   subject { described_class }
 
-  let(:length_rule) { described_class.new(password: password, option: option) }
+  let(:case_word_rule) { described_class.new(password: password, option: option) }
   let(:password) { '' }
   let(:option) {}
 
   it { is_expected.to be < PasswordStrength::Rules::Base }
 
   describe '#passed?' do
-    subject(:passed?) { length_rule.passed? }
+    subject(:passed?) { case_word_rule.passed? }
 
     describe 'when option is 2' do
       let(:option) { 2 }
@@ -23,8 +23,14 @@ RSpec.describe PasswordStrength::Rules::CaseWordsRule do
         it { is_expected.to be false }
       end
 
-      describe 'and password contains at least 2 uppercase characters' do
+      describe 'and password contains exactly 2 uppercase characters' do
         let(:password) { 'TwO_uppercase_letters' }
+
+        it { is_expected.to be true }
+      end
+
+      describe 'and password contains one uppercase characters' do
+        let(:password) { 'One_uppercase_letters' }
 
         it { is_expected.to be true }
       end
