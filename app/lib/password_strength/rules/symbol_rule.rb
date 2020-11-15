@@ -6,7 +6,7 @@ module PasswordStrength
   module Rules
     class SymbolRule < Base
 
-      SYMBOLS = '!@#$%&'
+      SYMBOLS = '!"#$%&\(\)*+,-.\/:;<=>?@\[\]^_`{|}~'
 
       def initialize(password:, option: 1, score: 25)
         super
