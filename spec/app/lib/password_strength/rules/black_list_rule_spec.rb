@@ -11,6 +11,10 @@ RSpec.describe PasswordStrength::Rules::BlackListRule do
 
   it { is_expected.to be < PasswordStrength::Rules::Base }
 
+  it 'has BLACK_LIST_FILE_DIR pointed to password_strength/conf' do
+    expect(described_class::BLACK_LIST_FILE_DIR).to match('app/lib/password_strength/conf')
+  end
+
   describe '#passed?' do
     subject(:passed?) { black_list_rule.passed? }
     let(:password_black_list_file_path) { File.expand_path('../../../../../support', __FILE__ ) }

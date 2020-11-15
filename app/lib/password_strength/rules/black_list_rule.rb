@@ -8,7 +8,7 @@ module PasswordStrength
 
       attr_reader :black_list_file
 
-      BLACK_LIST_FILE_DIR = File.expand_path('../conf', __FILE__ )
+      BLACK_LIST_FILE_DIR = File.expand_path('../conf', File.dirname(__FILE__))
 
       def initialize(password:, option: nil, score: 15, black_list_file: 'password_black_list.txt')
         @black_list_file = "#{BLACK_LIST_FILE_DIR}/#{black_list_file}"
