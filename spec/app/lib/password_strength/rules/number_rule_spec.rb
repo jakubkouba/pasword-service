@@ -5,26 +5,32 @@ require 'password_strength/rules/number_rule'
 RSpec.describe PasswordStrength::Rules::NumberRule do
   subject { described_class }
 
-  let(:length_rule) { described_class.new(password: password, option: option) }
+  let(:number_rule) { described_class.new(password: password, option: option) }
   let(:password) { '' }
   let(:option) {}
 
   it { is_expected.to be < PasswordStrength::Rules::Base }
 
   describe '#passed?' do
-    subject(:passed?) { length_rule.passed? }
+    subject(:passed?) { number_rule.passed? }
 
     describe 'when option is 2' do
       let(:option) { 2 }
 
-      describe 'when password does not contain 2 numbers' do
+      describe 'and password does not contain 2 numbers' do
         let(:password) { 'no_numbers' }
 
         it { is_expected.to eq false }
       end
 
-      describe 'when password contains at least 2 numbers' do
+      describe 'and password contains exactly 2 numbers' do
         let(:password) { 'password1_with_2_numbers' }
+
+        it { is_expected.to eq true }
+      end
+
+      describe 'and password contains more than 2 numbers' do
+        let(:password) { 'password1_with_2_3_numbers' }
 
         it { is_expected.to eq true }
       end

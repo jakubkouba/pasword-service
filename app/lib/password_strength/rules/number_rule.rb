@@ -5,14 +5,14 @@ require 'password_strength/rules/base'
 module PasswordStrength
   module Rules
     class NumberRule < Base
-      def initialize(password:, option: 1, score: 15)
+      def initialize(password:, option: 1, score: 10)
         super
       end
 
       def passed?
         raise InvalidOptionError, "Option has to be positive integer, but #{option.inspect} given" unless valid_option?
 
-        password.scan(/\d/).count == option
+        password.scan(/\d/).count >= option
       end
 
       def valid_option?
