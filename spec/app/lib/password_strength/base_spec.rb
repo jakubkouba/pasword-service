@@ -42,7 +42,7 @@ RSpec.describe PasswordStrength::Base do
 
     describe 'with length rule of score 10' do
       let(:length_rule) { double('LengthRule', score: 10, passed?: true) }
-      before { allow(password_strength).to receive(:rules).and_return([length_rule]) }
+      before { allow(password_strength).to receive(:rules).and_return({ length_rule: length_rule }) }
 
       context 'when passed' do
         it { is_expected.to eq 10 }
@@ -57,8 +57,9 @@ RSpec.describe PasswordStrength::Base do
     describe 'with length rule of score 10 and symbol rule of score 20' do
       let(:length_rule) { double('LengthRule', score: 10, passed?: true) }
       let(:symbol_rule) { double('SymbolRule', score: 20, passed?: true) }
+      let(:rules) { { length_rule: length_rule, symbol_rule: symbol_rule } }
 
-      before { allow(password_strength).to receive(:rules).and_return([length_rule, symbol_rule]) }
+      before { allow(password_strength).to receive(:rules).and_return(rules) }
 
       context 'when both passed' do
         it { is_expected.to eq 30 }
@@ -69,7 +70,7 @@ RSpec.describe PasswordStrength::Base do
   describe '#rules' do
     subject(:rules) { password_strength.rules }
 
-    it { is_expected.to be_an Array }
+    it { is_expected.to be_a Hash }
 
     context "when #{described_class} is initialize with a particular rule" do
       let(:password_strength) { described_class.new(password: password, rules: [rule]) }
@@ -81,7 +82,7 @@ RSpec.describe PasswordStrength::Base do
         end
 
         it 'contains that rule' do
-          expect(rules.first).to be_an_instance_of SomeRule
+          expect(rules.values.first).to be_an_instance_of SomeRule
         end
       end
     end
@@ -101,7 +102,7 @@ RSpec.describe PasswordStrength::Base do
         apply_rule
 
         expect(password_strength.rules.count).to eq 1
-        expect(password_strength.rules.first).to be_an_instance_of SomeRule
+        expect(password_strength.rules.values.first).to be_an_instance_of SomeRule
       end
 
       context 'when applying the same rule twice' do

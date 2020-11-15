@@ -9,7 +9,7 @@ require 'password_strength/rules/sequence_rule'
 
 module PasswordStrength
   class Base
-    attr_reader :password
+    attr_reader :password, :rules
 
     def initialize(password:, rules: [])
       @password = password
@@ -25,7 +25,7 @@ module PasswordStrength
     end
 
     def score
-      rules.reduce(0) do |total_score, rule|
+      rules.values.reduce(0) do |total_score, rule|
         total_score += rule.score if rule.passed?
         total_score
       end
@@ -33,10 +33,6 @@ module PasswordStrength
 
     def apply_rule(rule)
       @rules[rule] = load_rule(rule)
-    end
-
-    def rules
-      @rules.values
     end
 
     private
