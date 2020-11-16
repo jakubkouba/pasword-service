@@ -116,7 +116,7 @@ RSpec.describe PasswordStrength::Base do
 
   describe '#apply_rule' do
     subject(:apply_rule) { password_strength.apply_rule(rule) }
-    let(:rule) { :some }
+    let(:rule) { { some: { score: 10 } } }
     let(:password) { 'password' }
 
     context 'when length rule class exists' do

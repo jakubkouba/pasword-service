@@ -6,12 +6,15 @@ require 'serializers/password_strength_serializer'
 class PasswordService < Sinatra::Base
   post '/api/v1/password_strength' do
     password_strength = PasswordStrength.for(params['password']) do |ps|
-      ps.apply_rule :length
-      ps.apply_rule :number
-      ps.apply_rule :symbol
-      ps.apply_rule :case_words
-      ps.apply_rule :sequence
-      ps.apply_rule :black_list
+      ps.apply_rule length: { score: 10 }
+      ps.apply_rule number: { score: 10 }
+      ps.apply_rule symbol: { score: 25 }
+      ps.apply_rule case_words: { score: 10 }
+      ps.apply_rule sequence: { score: 5 }
+      ps.apply_rule black_list: { score: 5 }
+
+      ps.set_strength_threshold good: 32
+      ps.set_strength_threshold strong: 60
     end
 
     [

@@ -43,6 +43,8 @@ module PasswordStrength
       end
     end
 
+    private
+
     def rule_class(rule)
       Kernel.const_get "PasswordStrength::Rules::#{rule.to_s.split('_').map(&:capitalize).join}Rule"
     end
@@ -52,7 +54,12 @@ module PasswordStrength
     end
 
     def load_rule(rule)
-      rule_class(rule).new(password: password)
+      return unless rule.is_a? Hash
+
+      rule_name = rule.keys.first
+      score = rule.values&.first.fetch(:score, 0) || 0
+
+      rule_class(rule_name).new(password: password, score: score)
     end
   end
 end
