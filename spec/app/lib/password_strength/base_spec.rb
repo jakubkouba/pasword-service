@@ -122,6 +122,10 @@ RSpec.describe PasswordStrength::Base do
     context 'when length rule class exists' do
       class SomeRule
         def initialize(password); end
+
+        def parameterize
+          'some'
+        end
       end
 
       it 'adds instance of rule class to the list of rules' do

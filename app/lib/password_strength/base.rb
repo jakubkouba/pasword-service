@@ -31,7 +31,8 @@ module PasswordStrength
     end
 
     def apply_rule(rule)
-      @rules[rule] = load_rule(rule)
+      rule = load_rule(rule)
+      @rules[rule.parameterize] = rule
     end
 
     def set_strength_threshold(threshold)

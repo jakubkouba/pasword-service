@@ -15,6 +15,17 @@ module PasswordStrength
         raise NotImplementedError
       end
 
+      def to_s
+        self.class.to_s
+      end
+
+      def parameterize(suffix = false)
+        parameterized_name = to_s.split('::').last.split(/(?=[A-Z])/).map(&:downcase).join('_')
+        return parameterized_name.gsub('_rule', '') unless suffix
+
+        parameterized_name
+      end
+
     end
 
     class InvalidOptionError < StandardError; end
