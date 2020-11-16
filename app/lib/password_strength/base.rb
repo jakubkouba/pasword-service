@@ -11,10 +11,9 @@ module PasswordStrength
   class Base
     attr_reader :password, :rules, :good_password_threshold, :strong_password_threshold
 
-    def initialize(password:, rules: [])
+    def initialize(password:)
       @password = password
       @rules = {}
-      load_rules(rules)
     end
 
     def status
