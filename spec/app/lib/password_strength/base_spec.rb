@@ -142,5 +142,21 @@ RSpec.describe PasswordStrength::Base do
         end
       end
     end
+
+    context 'when rule does not exists' do
+      let(:rule) { { not_exists: { score: 20 } } }
+
+      it 'raise error' do
+        expect { apply_rule }.to raise_error PasswordStrength::InvalidPasswordRuleDefinition
+      end
+    end
+
+    context 'when rule is not a hash' do
+      let(:rule) { :rule }
+
+      it 'raise error' do
+        expect { apply_rule }.to raise_error PasswordStrength::InvalidPasswordRuleDefinition
+      end
+    end
   end
 end

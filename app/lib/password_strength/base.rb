@@ -54,12 +54,16 @@ module PasswordStrength
     end
 
     def load_rule(rule)
-      return unless rule.is_a? Hash
+      raise "Expecting hash, but `#{rule}' given"  unless rule.is_a? Hash
 
       rule_name = rule.keys.first
       score = rule.values&.first.fetch(:score, 0) || 0
 
       rule_class(rule_name).new(password: password, score: score)
+    rescue => error
+      raise InvalidPasswordRuleDefinition, error.message
     end
   end
+
+  class InvalidPasswordRuleDefinition < StandardError; end
 end
