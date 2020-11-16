@@ -67,6 +67,21 @@ RSpec.describe PasswordStrength::Base do
     end
   end
 
+  describe '#set_threshold' do
+    subject(:set_threshold) { password_strength.set_strength_threshold(threshold) }
+    let(:threshold) { {} }
+
+    describe 'when threshold is hash like { good: 35 }' do
+      let(:threshold) { { good: 35 } }
+
+      it 'set value 35 to @good_password_threshold' do
+        subject
+
+        expect(password_strength.good_password_threshold).to eq 35
+      end
+    end
+  end
+
   describe '#rules' do
     subject(:rules) { password_strength.rules }
 
