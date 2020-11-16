@@ -90,6 +90,17 @@ RSpec.describe PasswordStrength::Base do
         expect(password_strength.strong_password_threshold).to eq 70
       end
     end
+
+    describe 'when threshold is not hash' do
+      let(:threshold) { 'strong' }
+
+      it 'does not set password strength' do
+        subject
+
+        expect(password_strength.strong_password_threshold).to eq nil
+        expect(password_strength.good_password_threshold).to eq nil
+      end
+    end
   end
 
   describe '#rules' do

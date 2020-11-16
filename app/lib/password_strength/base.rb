@@ -36,6 +36,8 @@ module PasswordStrength
     end
 
     def set_strength_threshold(threshold)
+      return unless threshold.is_a? Hash
+
       case threshold.keys.first
       when :good then @good_password_threshold = threshold.values.first
       when :strong then @strong_password_threshold = threshold.values.first
