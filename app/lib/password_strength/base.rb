@@ -17,10 +17,10 @@ module PasswordStrength
     end
 
     def status
-      return :weak if score < 35
-      return :good if score >= 35 && score < 70
+      return :weak if score < good_password_threshold
+      return :good if score.between?(good_password_threshold, strong_password_threshold)
 
-      :strong if score >= 70
+      :strong if score > strong_password_threshold
     end
 
     def score

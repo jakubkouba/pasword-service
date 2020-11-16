@@ -9,29 +9,40 @@ RSpec.describe PasswordStrength::Base do
   describe '#status' do
     subject(:status) { password_strength.status }
     let(:score) { 0 }
+    let(:good_password_threshold) { 0 }
+    let(:strong_password_threshold) { 10 }
 
-    before { allow(password_strength).to receive(:score).and_return(score) }
+    before do
+      allow(password_strength).to receive(:score).and_return(score)
+      allow(password_strength).to receive(:good_password_threshold).and_return(good_password_threshold)
+      allow(password_strength).to receive(:strong_password_threshold).and_return(strong_password_threshold)
+    end
 
-    describe 'when score is less than 35' do
+    describe 'when score is less than good password threshold' do
       let(:score) { 30 }
+      let(:good_password_threshold) { 40 }
 
       it { is_expected.to eq :weak }
     end
 
-    describe 'when score is more or equal than 35' do
+    describe 'when score between good and strong threshold inclusively' do
       let(:score) { 35 }
+      let(:good_password_threshold) { 35 }
+      let(:strong_password_threshold) { 70 }
 
       it { is_expected.to eq :good }
     end
 
-    describe 'when score is less than 70' do
-      let(:score) { 65 }
-
-      it { is_expected.to eq :good }
-    end
-
-    describe 'when score is more or equal than 70' do
+    describe 'when score is less than or equal strong password threshold' do
       let(:score) { 70 }
+      let(:strong_password_threshold) { 70 }
+
+      it { is_expected.to eq :good }
+    end
+
+    describe 'when score is more or then strong password threshold' do
+      let(:score) { 75 }
+      let(:strong_password_threshold) { 70 }
 
       it { is_expected.to eq :strong }
     end
