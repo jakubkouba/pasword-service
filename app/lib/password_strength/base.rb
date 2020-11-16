@@ -9,7 +9,7 @@ require 'password_strength/rules/sequence_rule'
 
 module PasswordStrength
   class Base
-    attr_reader :password, :rules, :good_password_threshold
+    attr_reader :password, :rules, :good_password_threshold, :strong_password_threshold
 
     def initialize(password:, rules: [])
       @password = password
@@ -38,6 +38,7 @@ module PasswordStrength
     def set_strength_threshold(threshold)
       case threshold.keys.first
       when :good then @good_password_threshold = threshold.values.first
+      when :strong then @strong_password_threshold = threshold.values.first
       end
     end
 
