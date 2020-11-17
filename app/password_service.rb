@@ -12,6 +12,13 @@ class PasswordService < Sinatra::Base
     redirect '/index.html'
   end
 
+  options '/api/v1/password-strength' do
+    response.headers['Access-Control-Allow-Headers']= 'access-control-allow-origin, content-type'
+    response.headers["Access-Control-Allow-Origin"] = '*'
+    response.headers["Access-Control-Allow-Methods"] = "POST"
+    200
+  end
+
   post '/api/v1/password-strength' do
     payload = params
     payload = JSON.parse(request.body.read) unless params['password']
