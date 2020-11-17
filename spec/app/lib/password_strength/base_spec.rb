@@ -115,8 +115,9 @@ RSpec.describe PasswordStrength::Base do
   end
 
   describe '#apply_rule' do
-    subject(:apply_rule) { password_strength.apply_rule(rule) }
-    let(:rule) { { some: { score: 10 } } }
+    subject(:apply_rule) { password_strength.apply_rule(rule_name, options) }
+    let(:rule_name) { :some }
+    let(:options) { { score: 1, option: 1} }
     let(:password) { 'password' }
 
     context 'when length rule class exists' do
@@ -137,10 +138,10 @@ RSpec.describe PasswordStrength::Base do
 
       context 'when applying the same rule twice' do
 
-        before { password_strength.apply_rule(rule) }
+        before { password_strength.apply_rule(rule_name, options) }
 
         it 'does not add the the rule' do
-          password_strength.apply_rule(rule)
+          apply_rule
 
           expect(password_strength.rules.count).to eq 1
         end
@@ -148,15 +149,8 @@ RSpec.describe PasswordStrength::Base do
     end
 
     context 'when rule does not exists' do
-      let(:rule) { { not_exists: { score: 20 } } }
-
-      it 'raise error' do
-        expect { apply_rule }.to raise_error PasswordStrength::InvalidPasswordRuleDefinition
-      end
-    end
-
-    context 'when rule is not a hash' do
-      let(:rule) { :rule }
+      let(:rule_name) { :not_exists }
+      let(:options) { {} }
 
       it 'raise error' do
         expect { apply_rule }.to raise_error PasswordStrength::InvalidPasswordRuleDefinition

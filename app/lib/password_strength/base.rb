@@ -30,8 +30,8 @@ module PasswordStrength
       end
     end
 
-    def apply_rule(rule)
-      rule = load_rule(rule)
+    def apply_rule(rule_name, options = {})
+      rule = load_rule(rule_name, options)
       @rules[rule.parameterize] = rule
     end
 
@@ -50,17 +50,8 @@ module PasswordStrength
       Kernel.const_get "PasswordStrength::Rules::#{rule.to_s.split('_').map(&:capitalize).join}Rule"
     end
 
-    def load_rules(rules)
-      rules.each { |rule| @rules[rule] = load_rule(rule) }
-    end
-
-    def load_rule(rule)
-      raise "Expecting hash, but `#{rule}' given"  unless rule.is_a? Hash
-
-      rule_name = rule.keys.first
-      score = rule.values&.first.fetch(:score, 0) || 0
-
-      rule_class(rule_name).new(password: password, score: score)
+    def load_rule(rule_name, options)
+      rule_class(rule_name).new(options.merge(password: password))
     rescue => error
       raise InvalidPasswordRuleDefinition, error.message
     end
