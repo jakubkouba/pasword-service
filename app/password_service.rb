@@ -5,11 +5,11 @@ require 'serializers/password_strength_serializer'
 
 class PasswordService < Sinatra::Base
 
-  options '/api/v1/password-strength' do
-    response.headers['Access-Control-Allow-Headers']= 'access-control-allow-origin, content-type'
-    response.headers["Access-Control-Allow-Origin"] = '*'
-    response.headers["Access-Control-Allow-Methods"] = "POST"
-    200
+  set :public_folder, 'app/client/build'
+  set :static, true
+
+  get "/" do
+    redirect '/index.html'
   end
 
   post '/api/v1/password-strength' do
