@@ -4,8 +4,11 @@ require 'password_strength'
 require 'serializers/password_strength_serializer'
 
 class PasswordService < Sinatra::Base
-  post '/api/v1/password_strength' do
-    password_strength = PasswordStrength.for(params['password']) do |ps|
+  post '/api/v1/password-strength' do
+    payload = params
+    payload = JSON.parse(request.body.read) unless params['password']
+
+    password_strength = PasswordStrength.for(payload['password']) do |ps|
       ps.apply_rule length: { score: 10 }
       ps.apply_rule number: { score: 10 }
       ps.apply_rule symbol: { score: 25 }

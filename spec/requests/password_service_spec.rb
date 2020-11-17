@@ -4,11 +4,11 @@ require 'json'
 require 'password_service'
 
 RSpec.describe 'Password Service' do
-  describe 'POST /api/v1/password_strength' do
+  describe 'POST /api/v1/password-strength' do
     subject(:strength) { JSON.parse(last_response.body)['status'] }
     let(:password) { '' }
 
-    before { post '/api/v1/password_strength', { password: password } }
+    before { post '/api/v1/password-strength', { password: password } }
 
     it 'responds with 200' do
       expect(last_response).to be_ok
