@@ -1,9 +1,10 @@
 import './App.css';
+import PasswordInput from './components/PassowordInput'
 
 function App() {
   return (
     <div className="App">
-      Hello world
+      <PasswordInput/>
     </div>
   );
 }

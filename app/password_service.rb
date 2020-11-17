@@ -4,6 +4,14 @@ require 'password_strength'
 require 'serializers/password_strength_serializer'
 
 class PasswordService < Sinatra::Base
+
+  options '/api/v1/password-strength' do
+    response.headers['Access-Control-Allow-Headers']= 'access-control-allow-origin, content-type'
+    response.headers["Access-Control-Allow-Origin"] = '*'
+    response.headers["Access-Control-Allow-Methods"] = "POST"
+    200
+  end
+
   post '/api/v1/password-strength' do
     payload = params
     payload = JSON.parse(request.body.read) unless params['password']
@@ -22,7 +30,10 @@ class PasswordService < Sinatra::Base
 
     [
       200,
-      { 'Content-Type' => 'Application/json' },
+      {
+        'Content-Type' => 'Application/json',
+        'Access-Control-Allow-Origin' => '*'
+      },
       PasswordStrengthSerializer.new(password_strength).to_json
     ]
   end
