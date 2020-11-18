@@ -15,7 +15,7 @@ Determine password strength based on certain characteristics such as presence of
 
 `$ cd password_service`
 
-`$ ./start_password_service`
+`$ ./start`
 
 Then got to browser and enter this url: `http://localhost:4567` nad tart type to the field
 
