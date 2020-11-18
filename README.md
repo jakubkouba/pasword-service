@@ -1,7 +1,7 @@
 ## Password Service
 
 ### Description
-Determine password strength based on certain characteristics such as presence of numbers, uppercase letters, symbols etc.
+Determine password strength based on certain characteristics such as length, presence of numbers, uppercase letters, symbols etc.
 
 ### Prerequisites
 - ruby (2.6.3)
@@ -17,7 +17,7 @@ Determine password strength based on certain characteristics such as presence of
 
 `$ ./start`
 
-Then got to browser and enter this url: `http://localhost:4567` nad tart type to the field
+Then got to browser and enter this url: `http://localhost:4567` and start type into the input field
 
 To run the tests: `$ rspec`
 
@@ -29,8 +29,9 @@ Score an option are set for defaults abd can be override
 Every rule needs to implement `passsed?` method which returns true if passed the criteria or false if failed. 
 
 There are couple things that could be further improved:
-- Password strength calibration: It passes all criterias for to be a strong password, however, for some cases when the password should be weak
-is strong. This is due to bad calibration of score and thresholds.
+- Password strength calibration: It passes all criteria for to be a strong password, however, for weak and good password it doesn't work for all cases.
+The accumulation of points for determining strong state works well, but it doesn't work for determining weak or good password. The algorithm for this
+should be more sophisticated considering disqualification by applying negative score points for braking certain rules. 
 - Case words criteria: I think I implemented it incorrectly by checking for number of occurrences upper case characters 
 instead of sequence of uppercase characters
 - There are certain repetition of code in the rules. those which can take an integer (most of them) as an argument. This could be extracted into a module probably
