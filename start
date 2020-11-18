@@ -5,6 +5,7 @@ bundle
 
 # build react app
 cd app/client
+npm install
 npm run build
 
 # start sinatra
